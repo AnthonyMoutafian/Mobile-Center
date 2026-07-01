@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+
+  <nav class="navigation">
+    <div class="container">
+      <div class="nav-box">
+
+        <div class="nav-left">
+          <a href="/">
+            <img
+              src="https://www.mobilecentre.am/assets/img/logo.svg"
+              alt="Mobile Centre Logo"
+            >
+          </a>
+        </div>
+
+        <div class="nav-center">
+          <form action="/search" method="get">
+            <input type="text" name="search" placeholder="Search">
+            <button type="submit">
+              <i class="bi bi-search"></i>
+            </button>
+          </form>
+        </div>
+
+        <div class="nav-right">
+          <a>Cart</a>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <h1 class="category-title">
+      Search Results for "<%= search %>"
+    </h1>
+
+    <% if (!products || products.length === 0) { %>
+
+      <div class="no-products">
+        <h2>No products found</h2>
+        <p>Try searching with another keyword</p>
+      </div>
+
+    <% } else { %>
+
+      <div class="products">
+
+        <% products.forEach(product => { %>
+
+          <a
+            href="/product/<%= product.slug %>"
+            class="product-category"
+          >
+
+            <p class="<%= product.inStock > 0 ? 'availability' : 'outofstock' %>">
+              <%= product.inStock > 0 ? "Available" : "Out Of Stock" %>
+            </p>
+
+            <img
+              src="<%= product.image %>"
+              alt="<%= product.title %>"
+            >
+
+            <h2><%= product.title %></h2>
+
+            <p class="price">
+              <%= product.price.toLocaleString() %> AMD
+            </p>
+
+            <button>Buy</button>
+
+          </a>
+
+        <% }) %>
+
+      </div>
+
+    <% } %>
+
+  </div>
+  <footer class="footer">
+      <div class="container">
+          <div class="footerBox">
+              <div class="footerLeft">
+                <span>Mobile Center</span>
+              </div>
+              <div class="footerRight">
+                <span>© 2026 MobileCentre Art LLC. All Rights Reserved. (AM)</span>
+              </div>
+          </div>
+      </div>
+  </footer>
+</body>
+</html>

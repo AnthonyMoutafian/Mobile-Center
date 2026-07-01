@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+
+<nav class="navigation">
+  <div class="container">
+    <div class="nav-box">
+
+      <div class="nav-left">
+        <a href="/">
+          <img src="https://www.mobilecentre.am/assets/img/logo.svg">
+        </a>
+      </div>
+      <div class="nav-center">
+          <form action="/search" method="get">
+            <input type="text" name="search" placeholder="Search">
+            <button type="submit">
+              <i class="bi bi-search"></i>
+            </button>
+          </form>
+        </div>
+
+        <div class="nav-right">
+          <a>Cart</a>
+        </div>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+<h1 class="category-title"><%= title %></h1>
+
+<div class="category-layout">
+
+<aside class="filters">
+
+  <h2>Filters</h2>
+
+  <div class="filter-box">
+    <h3>Price</h3>
+
+    <input type="range" id="minPrice" min="0" max="600000" value="0">
+    <input type="range" id="maxPrice" min="0" max="600000" value="600000">
+
+    <div>
+      <span id="minPriceValue">0 AMD</span>
+      <span id="maxPriceValue">600000 AMD</span>
+    </div>
+  </div>
+
+  <div class="filter-box">
+  <h3>Brands</h3>
+
+  <% brands.forEach((brand) => { %>
+    <label>
+      <input
+        type="checkbox"
+        class="brandFilter"
+        value="<%= brand %>"
+      >
+      <%= brand %>
+    </label>
+    <% }) %>
+  </div>
+
+
+  <% Object.keys(specifications).forEach((title) => { %>
+
+  <div class="filter-box">
+
+    <h3><%= title %></h3>
+
+    <% specifications[title].forEach((value) => { %>
+      <label>
+        <input
+          type="checkbox"
+          class="specFilter"
+          data-filter="<%= title
+          .toLowerCase()
+          .replace(/\s+/g, '')
+          .replace(/[()]/g, '') %>"
+          value="<%= value %>"
+        >
+        <%= value %>
+      </label>
+    <% }) %>
+
+  </div>
+
+<% }) %>
+
+</aside>
+
+<div class="products">
+
+  <% products.forEach(product => { %>
+
+      <a
+          href="/product/<%= product.slug %>"
+          class="product-category"
+          data-price="<%= product.price %>"
+          data-brand="<%= product.brand %>"
+
+          <% product.params.forEach(param => { %>
+             data-<%= param.title
+            .toLowerCase()
+            .replace(/\s+/g, "")
+            .replace(/[()]/g, "") %>="<%= param.desc %>"
+          <% }) %>
+      >
+
+      <p class="<%= product.inStock > 0 ? 'availability' : 'outofstock' %>">
+        <%= product.inStock > 0 ? "Available" : "Out Of Stock" %>
+      </p>
+
+      <img src="<%= product.image %>">
+
+      <h2><%= product.title %></h2>
+
+      <p class="price">
+        <%= product.price.toLocaleString() %> AMD
+      </p>
+
+      <button>Buy</button>
+
+    </a>
+
+  <% }) %>
+
+</div>
+
+</div>
+</div>
+  <footer class="footer">
+      <div class="container">
+          <div class="footerBox">
+              <div class="footerLeft">
+                <span>Mobile Center</span>
+              </div>
+              <div class="footerRight">
+                <span>© 2026 MobileCentre Art LLC. All Rights Reserved. (AM)</span>
+              </div>
+          </div>
+      </div>
+  </footer>
+<script src="/javascripts/filters.js"></script>
+
+</body>
+</html>
